@@ -9,7 +9,7 @@ For fun, let's decode the first one:
 ```bash
 echo "SGEgaGEhIEJ1ZW4gaW50ZW50byBwZXJvIG5vIGVzIGFzw60uIDxicj48YnI+RXN0ZSByZXRvIGVzIGEgcHJ1ZWJhIGRlIGhhY2tlcnMuIDxicj4g8J+SqiBObyB0ZSByaW5kYXMsIHNpZ3VlIGludGVudMOhbmRvbG8uIPCfkqo=" | base64 -d
 
-Ha ha! Nice try, but that's not how it works. <br><br>This challenge is hacker-proof. <br> 💪 Don't give up, keep trying. 💪
+Ha ha! Buen intento pero no es así. <br><br>Este reto es a prueba de hackers. <br> 💪 No te rindas, sigue intentándolo. 💪
 ```
 
 We also find the following variables in the JavaScript code:
