@@ -86,7 +86,7 @@ We decode the returned `text`:
 ```bash
 echo "V29XLCBoYXMgc3VwZXJhZG8gZWwgZGVzYWbDrW8uIFRlIHZveSBhIHByZW1pYXIgY29uIHVuYSBiYW5kZXJhLiDwn5qpIDxicj48YnI+IEhBQ0t7NCRzdXBlciRzdGFyISF9" | base64 -d
 
-WoW, you have completed the challenge. I will reward you with a flag. 🚩 <br><br> HACK{4$super$star!!}
+WoW, has superado el desafío. Te voy a premiar con una bandera. 🚩 <br><br> HACK{4$super$star!!}
 ```
 
 ## Final Result
