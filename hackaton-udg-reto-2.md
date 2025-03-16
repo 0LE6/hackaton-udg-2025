@@ -293,4 +293,11 @@ HACK{nSPWReoeWijd0PYyWO5YWfbNp}
 
 ### Flag 3
 
+```shell
+ss -tulnp | grep 127.0.0.1
 
+tcp   LISTEN  0  128   127.0.0.1:7080       0.0.0.0:*      
+tcp   LISTEN  0  70    127.0.0.1:33060      0.0.0.0:*      
+tcp   LISTEN  0  151   127.0.0.1:3306       0.0.0.0:*  
+
+```
