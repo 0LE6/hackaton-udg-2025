@@ -341,58 +341,7 @@ steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=%7B%7B7*7%7D%7D"
     <head>
         <title>Network toolkit</title>
         <style>
-            #submitButton {
-                padding: 10px 15px; 
-                border: none; 
-                border-radius: 4px; 
-                background-color: rgb(255, 99, 71); /* Color rojo tomate */
-                color: white; 
-                cursor: pointer; 
-                transition: background-color 0.3s;
-            }
-
-            #submitButton:disabled {
-                background-color: gray; 
-                color: rgba(255, 255, 255, 0.5);
-                cursor: not-allowed;
-            }
-
-            /* Estilos del formulario */
-            form {
-                margin: 20px; 
-                padding: 20px; 
-                border: 1px solid #ccc; 
-                border-radius: 8px; 
-                background-color: #f9f9f9; 
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-                display: flex; 
-                flex-direction: column; 
-                width: 100%; 
-                max-width: 600px;
-            }
-
-            /* Estilos del input */
-            input[type="text"] {
-                padding: 8px; 
-                border: 1px solid #ccc; 
-                border-radius: 4px; 
-                width: 100%; 
-                margin-bottom: 10px;
-            }
-
-            /* Estilos del bloque pre */
-            pre {
-                background-color: #f5f5f5; 
-                border: 1px solid #ccc; 
-                border-radius: 4px; 
-                padding: 10px; 
-                overflow: auto; 
-                white-space: pre-wrap; 
-                word-wrap: break-word; 
-                margin-top: 20px; 
-                font-family: monospace; 
-                font-size: 14px;
-            }
+            ...          
         </style>
     </head>
     <body>
@@ -427,61 +376,7 @@ steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=%7B%7Bself._TemplateReference__c
     <!doctype html>
     <html>
     <head>
-        <title>Network toolkit</title>
-        <style>
-            #submitButton {
-                padding: 10px 15px; 
-                border: none; 
-                border-radius: 4px; 
-                background-color: rgb(255, 99, 71); /* Color rojo tomate */
-                color: white; 
-                cursor: pointer; 
-                transition: background-color 0.3s;
-            }
-
-            #submitButton:disabled {
-                background-color: gray; 
-                color: rgba(255, 255, 255, 0.5);
-                cursor: not-allowed;
-            }
-
-            /* Estilos del formulario */
-            form {
-                margin: 20px; 
-                padding: 20px; 
-                border: 1px solid #ccc; 
-                border-radius: 8px; 
-                background-color: #f9f9f9; 
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-                display: flex; 
-                flex-direction: column; 
-                width: 100%; 
-                max-width: 600px;
-            }
-
-            /* Estilos del input */
-            input[type="text"] {
-                padding: 8px; 
-                border: 1px solid #ccc; 
-                border-radius: 4px; 
-                width: 100%; 
-                margin-bottom: 10px;
-            }
-
-            /* Estilos del bloque pre */
-            pre {
-                background-color: #f5f5f5; 
-                border: 1px solid #ccc; 
-                border-radius: 4px; 
-                padding: 10px; 
-                overflow: auto; 
-                white-space: pre-wrap; 
-                word-wrap: break-word; 
-                margin-top: 20px; 
-                font-family: monospace; 
-                font-size: 14px;
-            }
-        </style>
+        ...        
     </head>
     <body>
         <h1>Ejecutar diagnóstico ICMP</h1>
