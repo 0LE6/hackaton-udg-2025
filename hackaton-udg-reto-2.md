@@ -11,7 +11,7 @@
 
 ### Flag 1 
 
-Lo primero que encontramos es en la ruta `htpp://<IP>/wp1/` así que nos encontramos ante una máquina con WordPress.
+Lo primero que encontramos es en la ruta `http://<IP>/wp1/` así que nos encontramos ante una máquina con WordPress.
 
 Encontramos el usuario `admin` con la comanda `curl -s -L http://<IP>/wp1/?author=1` y con esta información y mediante fuerza bruta con la herramienta `wpscan` y ejecutando el siguiente comando 
 
