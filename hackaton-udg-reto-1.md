@@ -1,4 +1,4 @@
-# Challenge I - Walkthrough
+# Hackaton UdG - Reto 1
 
 ## Step 1 - Reviewing the Code
 
