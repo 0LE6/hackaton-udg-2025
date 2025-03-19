@@ -80,7 +80,19 @@ y con esto conseguimos un usuario con poderes de administrador, y como nos dicen
 
 Primero, subimos una imagen desde el apartado de `upload`, este nos mostratrá un poco la estructura de los paths `/noteasapp/<TU_USER>/<NOMBRE_IMG>.jpg`. Encendemos [Caido](https://caido.io/), y luego vamos a la barra de búsqueda, ese path y nos dará la imagen que hemos subido, reafirmando una vulnerabilidad de `path traversal`.
 
-Volvemos a Caido, en el apartado de `HTTP history` pillamos la request que se hizo al comprobar la imagen, click derecho en ella y nso la llevamos al apartado de `Replay`, y hay una límea que hay que modificar `Accept: image/avif,image/webp,*/*` y cambiar por `Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8Accept-Language: en-US,en;q=0.5`, esto nos permitirá ver otros formatos de archivo que no solo sea de imagen, luego realizamos dos retrocesos de directorio y apuntamos al archivo que contiene la flag, llamado `secret.txt`
+Volvemos a Caido, en el apartado de `HTTP history` pillamos la request que se hizo al comprobar la imagen, click derecho en ella y nso la llevamos al apartado de `Replay`, y hay una límea que hay que modificar 
+
+```python
+Accept: image/avif,image/webp,*/*
+```
+
+y cambiar por
+
+```python
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8Accept-Language: en-US,en;q=0.5
+```
+
+esto nos permitirá ver otros formatos de archivo que no solo sea de imagen, luego realizamos dos retrocesos de directorio y apuntamos al archivo que contiene la flag, llamado `secret.txt`
 
 **Request**
 ```python
