@@ -67,7 +67,7 @@ curl -b "NOTESAPP=29260242|asmith||author" http://10.0.2.12/notesapp/
 
 Cuando registramos a un usuario en la URL aparece `&is_author=True`, aprovechando esta vulnerabilidad podemos modificar el path añadiendo `is_admin=True` como vemos en el ejemplo siguiente:
 
-```shell
+```python
 http://10.0.2.12/notesapp/saveprofile?action=new&uid=pepito&pw=12345&is_admin=True
 ```
 y con esto conseguimos un usuario con poderes de administrador, y como nos dicen que un administrador puede editar otros, pues tan sencillo como ir a editar el usuario `administrator` y en la `Private Note` vemos la flag.
