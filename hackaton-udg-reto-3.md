@@ -78,7 +78,7 @@ y con esto conseguimos un usuario con poderes de administrador, y como nos dicen
 
 ### Flag 3
 
-Primero, subimos una imagen desde el apartado de `upload`, este nos mostratrá un poco la estructura de los paths `/noteasapp/<TU_USER>/<NOMBRE_IMG>.jpg`. Encendemos [Caido](https://caido.io/), y luego vamos a la barra de búsqueda, ese path y nos dará la imagen que hemos subido, reafirmando una vulnerabilidad de `path traversal`.
+Primero, subimos una imagen desde el apartado de `upload`, este nos mostratrá un poco la estructura de los paths `/notesapp/<TU_USER>/<NOMBRE_IMG>.jpg`. Encendemos [Caido](https://caido.io/), y luego vamos a la barra de búsqueda, ese path y nos dará la imagen que hemos subido, reafirmando una vulnerabilidad de `path traversal`.
 
 Volvemos a Caido, en el apartado de `HTTP history` pillamos la request que se hizo al comprobar la imagen, click derecho en ella y nso la llevamos al apartado de `Replay`, y hay una límea que hay que modificar 
 
